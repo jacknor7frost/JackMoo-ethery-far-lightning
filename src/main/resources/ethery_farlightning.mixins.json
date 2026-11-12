@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8.5",
+  "package": "etheryfarlightning.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "ethery_farlightning.refmap.json",
+  "mixins": [
+    "LightningBoltMixin"
+  ],
+  "client": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}   

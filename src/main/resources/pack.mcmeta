@@ -1,0 +1,6 @@
+{
+  "pack": {
+    "pack_format": 15,
+    "description": "See lightning bolts from far away — without touching your render or simulation distance.  In vanilla, lightning bolts fade out of sight beyond ~136 blocks from a render distance of 32. This mod removes that perceptual limit by overriding the entity's render cull, so bolts remain visible for the full extent of your tracking range instead of cutting off early. Also adds a distant thunder sound that fades with distance during storms. "
+  }
+}
