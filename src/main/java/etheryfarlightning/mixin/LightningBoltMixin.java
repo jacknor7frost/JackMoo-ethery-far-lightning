@@ -13,7 +13,6 @@ public class LightningBoltMixin {
     @Inject(method = "shouldRenderAtSqrDistance", at = @At("HEAD"), cancellable = true)
     private void alwaysRenderFromFar(double distance, CallbackInfoReturnable<Boolean> cir) {
         if (!EtheryConfig.ENABLED.get()) {
-            cir.setReturnValue(false);
             return;
         }
         double maxDist = EtheryConfig.MAX_DISTANCE.get();
@@ -23,4 +22,4 @@ public class LightningBoltMixin {
             cir.setReturnValue(distance < maxDist * maxDist);
         }
     }
-}   
+}
