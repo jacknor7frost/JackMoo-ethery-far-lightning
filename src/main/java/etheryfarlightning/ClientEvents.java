@@ -17,31 +17,37 @@ public class ClientEvents {
 
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
-        if (ThunderFlashPacket.hasPending) {
-            ThunderFlashPacket.hasPending = false;
+        if (event.phase != TickEvent.Phase.END) return;
 
-            Minecraft mc = Minecraft.getInstance();
-            if (mc.player == null) return;
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null || mc.level == null) {
+            ThunderFlashPacket.pendingStrikes.clear();
+            ThunderFlashPacket.flashTicks = 0;
+            return;
+        }
 
-            double dx = ThunderFlashPacket.pendingX - mc.player.getX();
-            double dy = ThunderFlashPacket.pendingY - mc.player.getY();
-            double dz = ThunderFlashPacket.pendingZ - mc.player.getZ();
+        ThunderFlashPacket pkt;
+        while ((pkt = ThunderFlashPacket.pendingStrikes.poll()) != null) {
+            double dx = pkt.x - mc.player.getX();
+            double dy = pkt.y - mc.player.getY();
+            double dz = pkt.z - mc.player.getZ();
             double dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
             ThunderFlashPacket.flashTicks = ThunderFlashPacket.FLASH_DURATION;
 
             float volume = Math.max(0.1f, 1.0f - (float) (dist / 4096.0));
             float pitch = 0.8f + RANDOM.nextFloat() * 0.4f;
-            mc.player.level().playSound(
-                    mc.player,
-                    mc.player.getX(), mc.player.getY(), mc.player.getZ(),
-                    SoundEvents.LIGHTNING_BOLT_THUNDER,
-                    SoundSource.NEUTRAL,
-                    volume,
-                    pitch
+
+            mc.level.playLocalSound(
+                mc.player.getX(), mc.player.getY(), mc.player.getZ(),
+                SoundEvents.LIGHTNING_BOLT_THUNDER,
+                SoundSource.WEATHER,
+                volume,
+                pitch,
+                false
             );
         }
 
         ThunderFlashPacket.tickFlash();
     }
-}   
+}
