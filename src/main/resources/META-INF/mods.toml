@@ -5,10 +5,10 @@ license="MIT License"
 [[mods]]
 modId="ethery_farlightning"
 version="1.0.2"
-displayName="ethery_farlightning"
+displayName="Ethery Far Lightning"
 displayURL="https://mcreator.net"
 logoFile="logo.png"
-credits="JackMoo Project direction,baseline data, data collection + **Brave Search AI Assistant** \u2014 code architecture, implementation, debugging-Created using mod maker MCreator - https://mcreator.net/about"
+credits="JackMoo Project direction,baseline data, data collection + Brave Search AI Assistant code architecture, implementation, Gemini AI (Multiplayer Packet Queue, Mixin & Config Fixes, Performance Cleanup)-Created using mod maker MCreator - https://mcreator.net/about"
 authors="Jack_Moo/EtheryArmors"
 description="See lightning bolts from far away \u2014 without touching your render or simulation distance.  In vanilla, lightning bolts fade out of sight beyond ~136 blocks from a render distance of 32. This mod removes that perceptual limit by overriding the entity's render cull, so bolts remain visible for the full extent of your tracking range instead of cutting off early. Also adds a distant thunder sound that fades with distance during storms. "
 
