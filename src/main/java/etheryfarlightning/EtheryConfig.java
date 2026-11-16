@@ -22,4 +22,4 @@ public class EtheryConfig {
         builder.pop();
         SPEC = builder.build();
     }
-}   
+}  
