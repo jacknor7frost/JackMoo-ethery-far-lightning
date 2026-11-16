@@ -3,13 +3,14 @@ package etheryfarlightning;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraft.network.FriendlyByteBuf;
 
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.function.Supplier;
 
 public class ThunderFlashPacket {
     public final double x, y, z;
 
-    public static double pendingX, pendingY, pendingZ;
-    public static boolean hasPending = false;
+    public static final Queue<ThunderFlashPacket> pendingStrikes = new ConcurrentLinkedQueue<>();
 
     public static int flashTicks = 0;
     public static final int FLASH_DURATION = 10;
@@ -32,11 +33,9 @@ public class ThunderFlashPacket {
 
     public static void handle(ThunderFlashPacket pkt, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            pendingX = pkt.x;
-            pendingY = pkt.y;
-            pendingZ = pkt.z;
-            hasPending = true;
+            pendingStrikes.add(pkt);
         });
+        ctx.get().setPacketHandled(true);
     }
 
     public static void tickFlash() {
@@ -50,4 +49,4 @@ public class ThunderFlashPacket {
             return 0.0f;
         return flashTicks / (float) FLASH_DURATION;
     }
-}   
+}
